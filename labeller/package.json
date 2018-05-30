@@ -1,0 +1,11 @@
+{
+  "name": "Labeller",
+  "description": "Label HTML text content with Readability",
+  "dependencies": {
+    "jsdom": "^11.9.0",
+    "node-fetch": "^1.7.3",
+    "readability": "github:mozilla/readability"
+  },
+  "scripts": {"label":"node label.js"},
+  "private": true
+}
