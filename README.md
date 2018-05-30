@@ -34,4 +34,5 @@ Find the main content in a web page, like Chrome, Safari and Firefox for mobile.
 # Work in progress 
   Upload traing model
   Update html parser module
+  Runner module, to run fasttext and return the content
   
