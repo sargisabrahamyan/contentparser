@@ -20,8 +20,13 @@ Captures content from your website, the system parses it into small, discrete en
 Find the main content in a web page, like Chrome, Safari and Firefox for mobile.The program has input is a web page and output is the brief main conpage.
 
 # Results
+
   Accuracy 94.1%
+
   Number of examples: 1078868
+  
   Trained on 18.5M lines ( 30.000 web pages )
+  
   Tested on 1M lines
+  
   Parameter for fasttext: fasttext supervised -minn 1 -maxn 3
