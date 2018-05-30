@@ -1,13 +1,19 @@
-# contentparser
+# Contentparser
+
+Author: Sargis Abrahamyan
+
+Project advisor: Adam Mathias Bittlingmayer
 
 # Title               
 Content Parsing
 
 Captures content from your website, the system parses it into small, discrete entry. This makes it easier to get the main propose of the page.
 
-# How is it done
-  The first part is just collecting data
-  
+# What is it done
+  The first part is just collecting data.
+    Collecting the web pages using Python client. Then for each page it does the the following:
+      Gets the raw text content on one hand and and compares with the content parsed by Firfox then labels the lines "need" "skip".
+      
   The second part is the training using fasttext 
 
 # Similar
