@@ -22,24 +22,29 @@ Thus each input row is not the page but a single section in isolation, and the t
 
 ## Implementation
 
-1. **Build an unlabelled dataset** Python
-**htmlparser** is a crawler script to download millions of raw HTML pages given a starting URL.
+### 1. **Build an unlabelled dataset**
+**htmlparser** is our simple Python crawler script to download millions of raw HTML pages given a starting URL.
 
-2. **Label the dataset** NodeJS
-**label.js** uses one of the existing rules-based content parsers, [Mozilla Readability](https://github.com/mozilla/readability), to get the main content of each HTML page.
+### 2. **Label the dataset**
+Our NodeJS **label.js** fil uses one of the existing rules-based content parsers, Mozilla [**readability**](https://github.com/mozilla/readability), to get the main content of each HTML page.
 
 Then we diff the new page against the original to find which sections were deleted.  Then we add a label `keep` or `delete` to each section in the original.
 
 As each web page has many sections, we end up with orders of magnitude more labelled rows.
 
-3. **Train a classification model** fastText
-We **fastText** supervised to train a simple classification model to predict the label for each section, which can be applied to keep or delete it.
+### 3. Train a classification model
+We run **fastText** supervised to train a simple classification model to predict the label for each section, which can be applied to keep or delete it.
 
 ## Results
 
+We ran fastText with the following parameters:
+```
+fasttext supervised -minn 1 -maxn 3 ...
+```
+
 Number of examples: 1078868
-  
-Trained on 18.5M lines (~30K web pages) with `fasttext supervised -minn 1 -maxn 3`
+
+Trained on 18.5M lines (~30K web pages)
   
 Tested on 1M lines
   
