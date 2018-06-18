@@ -1,38 +1,53 @@
-# Contentparser
+# contentparser
 
 Author: Sargis Abrahamyan
 
 Project advisor: Adam Mathias Bittlingmayer
 
-# Title               
-Content Parsing
+Major browsers like Firefox, Chrome for Android and Safari for iOS include a feature to distill web pages into more readable and mobile-friendly versions by finding the main content and removing the other sections.  They use hand-built rules and site-specific hacks to achieve reasonable results on content parsing for many top websites and publishing platforms.
 
-Captures content from your website, the system parses it into small, discrete entry. This makes it easier to get the main propose of the page.
+**contentparser** is a learning approach to content parsing - given training data, it trains a model that has similar effectiveness.  The results show that this task is learnable using standard word embeddings trained on raw HTML as input.
 
-# What is it done
-  The first part is just collecting data.
-    Collecting the web pages using Python client. Then for each page it does the the following:
-      Gets the raw text content on one hand and and compares with the content parsed by Firfox then labels the lines "need" "skip".
-      
-  The second part is the training using fasttext 
+## Our Approach
 
-# Similar
-Find the main content in a web page, like Chrome, Safari and Firefox for mobile.The program input is a web page and output is the brief main content text.
+This task can be seen as a sequence-to-sequence task, but we formulate it as simple binary classifcation.
 
-# Results
+We assume that the existing rules-based implementations either keep or delete sections, but do not change sections that they keep.
 
-  Accuracy 94.1%
+Thus each input row is not the page but a single section in isolation, and the task is to predict whether to keep it or delete it.
 
-  Number of examples: 1078868
+## Implementation
+
+1. **Build an unlabelled dataset** Python
+**htmlparser** is a crawler script to download millions of raw HTML pages given a starting URL.
+
+2. **Label the dataset** NodeJS
+**label.js** uses one of the existing rules-based content parsers, [Mozilla Readability](https://github.com/mozilla/readability), to get the main content of each HTML page.
+
+Then we diff the new page against the original to find which sections were deleted.  Then we add a label `keep` or `delete` to each section in the original.
+
+As each web page has many sections, we end up with orders of magnitude more labelled rows.
+
+3. **Train a classification model** fastText
+We **fastText** supervised to train a simple classification model to predict the label for each section, which can be applied to keep or delete it.
+
+## Results
+
+Number of examples: 1078868
   
-  Trained on 18.5M lines ( 30.000 web pages )
+Trained on 18.5M lines (~30K web pages) with `fasttext supervised -minn 1 -maxn 3`
   
-  Tested on 1M lines
+Tested on 1M lines
   
-  Parameter for fasttext: fasttext supervised -minn 1 -maxn 3
+Accuracy **94.1%**
 
-# Work in progress 
-  Upload traing model
-  Update html parser module
-  Runner module, to run fasttext and return the content
-  
+
+## Future Work
+
+Upload trained model
+
+Update HTML parser module
+
+Runner module to run fasttext and return the content
+
+Slice results by dimensions like line length and TLD
