@@ -14,7 +14,11 @@ This task can be seen as a sequence-to-sequence task, but we formulate it as sim
 
 We assume that the existing rules-based implementations either keep or delete sections, but do not change sections that they keep.
 
+<img src="img/article.png" width="300px"> <img src="img/highlighted.png" width="300px">
+
 Thus each input row is not the page but a single section in isolation, and the task is to predict whether to keep it or delete it.
+
+<img src="img/section.png" width="600px">
 
 ## Implementation
 
